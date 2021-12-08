@@ -17,6 +17,7 @@ import (
 const serviceName = "winhchks"
 const displayName = "winhchks"
 const description = "This service makes a HTTP request to a URL every minute for a healthcheck."
+const version = "v0.1.1"
 
 type service struct {
 	elog debug.Log
@@ -81,7 +82,7 @@ func main() {
 
 func calcNextRun() <-chan time.Time {
 	now := time.Now()
-	next := now.Add(time.Minute).Truncate(time.Minute)
+	next := now.Add(time.Minute).Truncate(time.Minute).Add(2 * time.Second)
 
 	return time.After(next.Sub(now))
 }
@@ -215,6 +216,7 @@ func (s *service) Healthcheck() {
 		s.elog.Error(1, fmt.Sprintf("Healthcheck err='%v'", err))
 	} else {
 		s.elog.Info(1, fmt.Sprintf("Healthcheck status='%s'", resp.Status))
+		resp.Body.Close()
 	}
 }
 
@@ -228,7 +230,7 @@ func (s *service) Execute(args []string, r <-chan svc.ChangeRequest, changes cha
 
 	changes <- svc.Status{State: svc.Running, Accepts: cmdsAccepted}
 
-	s.elog.Info(1, fmt.Sprintf("Service started url='%s'", s.url))
+	s.elog.Info(1, fmt.Sprintf("Service started url='%s' version='%s'", s.url, version))
 
 	for {
 		select {
