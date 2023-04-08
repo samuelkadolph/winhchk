@@ -17,7 +17,7 @@ import (
 const serviceName = "winhchks"
 const displayName = "winhchks"
 const description = "This service makes a HTTP request to a URL every minute for a healthcheck."
-const version = "v0.1.1"
+const version = "v0.1.2"
 
 type service struct {
 	elog debug.Log

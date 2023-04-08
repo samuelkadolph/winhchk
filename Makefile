@@ -18,7 +18,7 @@ build: build/winhchk.exe
 .PHONY: build
 
 build/winhchk.exe: $(wildcard cmd/winhchk/*.go)
-	$(GO) build -o build/winhchk.exe ./cmd/winhchk
+	$(GO) build -ldflags="-s -w" -o build/winhchk.exe ./cmd/winhchk
 
 clean:
 	$(RM) $(call Path,build/*)
@@ -35,3 +35,8 @@ get:
 test:
 	$(GO) test $(addprefix ./,$(PACKAGES))
 .PHONY: test
+
+upgrade:
+	$(GO) get -u ./cmd/winhchk
+	$(GO) mod tidy
+.PHONY: upgrade
