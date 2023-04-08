@@ -7,7 +7,7 @@ to a heart beat service such as [healthchecks.io](https://healthchecks.io/).
 
 ```
 Add-MpPreference -ExclusionPath C:\winhchk.exe
-curl "https://github.com/samuelkadolph/winhchk/releases/download/v0.1.1/winhchk.exe" -o C:\winhchk.exe
+curl "https://github.com/samuelkadolph/winhchk/releases/download/v0.1.2/winhchk.exe" -o C:\winhchk.exe
 C:\winhchk.exe -url https://hc-ping.com/eb095278-f28d-448d-87fb-7b75c171a6aa install
 C:\winhchk.exe start
 ```
